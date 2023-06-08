@@ -109,10 +109,12 @@ public class BinaryInputArchive implements InputArchive {
     }
 
     public String readString(String tag) throws IOException {
+        // 确定长度
         int len = in.readInt();
         if (len == -1) {
             return null;
         }
+        // 保证：0 < len < maxBuffer + extraMaxBuffer
         checkLength(len);
         byte[] b = new byte[len];
         in.readFully(b);
